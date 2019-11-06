@@ -1,6 +1,6 @@
 import "./styles/main.scss";
 ////////////////////////////
-import { utils, utils2 } from "./utils";
+import { utils } from "./utils";
 import { curriculum, languages } from "./data";
 
 const phrase1 = document.getElementById("js-phrase1");
@@ -54,10 +54,11 @@ const getExerciseText = alreadyCalledPhrases => {
 
 const showNextPhrase = () => {
   const selectLang = getSelectedLanguage();
+  utils.switchClassNew(
+    ["active", "non-active"],
+    [restart, hideShowOppLang, switchLang]
+  );
   utils.switchClass(phrase2, "not-active", "active");
-  utils.switchClass(restart, "active", "not-active");
-  utils.switchClass(hideShowOppLang, "active", "not-active");
-  utils.switchClass(switchLang, "active", "not-active");
   utils.switchClass(spaceFiller, "phrases-active", "phrases-not-active");
 
   hideShowOppLang.innerHTML = "show";
@@ -83,10 +84,10 @@ const showNextPhrase = () => {
 };
 
 const restartExercise = () => {
-  utils.switchClass(phrase2, "not-active", "active");
-  utils.switchClass(restart, "not-active", "active");
-  utils.switchClass(hideShowOppLang, "not-active", "active");
-  utils.switchClass(switchLang, "not-active", "active");
+  utils.switchClassNew(
+    ["non-active", "active"],
+    [phrase2, restart, hideShowOppLang, switchLang]
+  );
   utils.switchClass(spaceFiller, "phrases-not-active", "phrases-active");
   phrasesAlreadyCalled = [];
   utils.changeHtmlText(
@@ -135,10 +136,3 @@ switchLang.addEventListener("click", oppLanguageFirst);
 hideShowOppLang.addEventListener("click", hideShowOppLangFunc);
 
 // write some unit tests for util functions
-
-utils2.toggleActiveClass(
-  ["not-active", "active"],
-  [header, restart, hideShowOppLang]
-);
-
-
