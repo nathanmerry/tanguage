@@ -7,41 +7,49 @@
     <title>Document</title>
   </head>
   <body>
-    <header class="header">
-      <h1 class="item">TANGUAGE</h1>
-    </header>
-    <div class="corner-info--left">
-      <h3>Language</h3>
-      <select id="js-selectedLanguage" class="item">
-        <option value="es">Spanish</option>
-        <option value="fr">French</option>
-      </select>
+    <div class="container-medium layout-header">
+      <div class="item">
+        <h3 class="dropdown-header">Language</h3>
+        <select id="js-selectedLanguage" class="item">
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+        </select>
+      </div>
+      <header class="header">
+        <h1>TANGUAGE</h1>
+      </header>
+      <div class="item">
+        <h3 class="dropdown-header">Exersice</h3>
+        <select id="js-selectedExercise" class="item">
+          <option value="words">Words</option>
+          <option value="phrases">Phrases</option>
+        </select>
+      </div>
     </div>
 
-    <div class="corner-info--right">
-      <button class="item button-secondary" id="js-restartButton">
-        Restart Excerise
-      </button>
-      <select id="js-selectedExercise" class="item">
-        <option value="words">Words</option>
-        <option value="phrases">Phrases</option>
-      </select>
-      <button id="js-switchLang" class="button-secondary item">
-        Spanish First
-      </button>
-    </div>
+    <div class="container-large layout-main">
+      <div class="row">
+        <button id="js-phraseBtn" class="button-primary">
+          First Phrase
+        </button>
+        <div id="js-spaceFiller" class="phrases-not-active phrases">
+          <p id="js-finsihed"></p>
+          <p id="js-phrase1"></p>
+          <p id="js-phrase2" class="not-active"></p>
+        </div>
+        <button id="js-showOpposite" class="not-active button-secondary">
+          show
+        </button>
+      </div>
 
-    <div class="layout">
-      <button id="js-phraseBtn" class="button-primary">
-        First Phrase
-      </button>
-
-      <p id="js-finsihed"></p>
-      <p id="js-phrase1"></p>
-      <p id="js-phrase2" class="text-hide"></p>
-      <button id="js-showOpposite" class="button-secondary">
-        show
-      </button>
+      <div class="row">
+        <button class="item not-active button-secondary" id="js-restartButton">
+          Restart Excerise
+        </button>
+        <button id="js-switchLang" class="not-active button-secondary  item">
+          Spanish First
+        </button>
+      </div>
     </div>
   </body>
 </html>

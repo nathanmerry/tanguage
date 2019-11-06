@@ -144,10 +144,14 @@ const phrases = {
   }
 };
 
-
-const curriculum = {
+export const curriculum = {
   words,
   phrases
 };
 
-export { curriculum };
+export const languages = {
+  en: "English",
+  es: "Spanish",
+  fr: "French"
+}
+

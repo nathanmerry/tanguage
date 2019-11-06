@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 ////////////////////////////
 import { utils } from "./utils";
-import { curriculum } from "./data";
+import { curriculum, languages } from "./data";
 
 const phrase1 = document.getElementById("js-phrase1");
 const phrase2 = document.getElementById("js-phrase2");
@@ -12,9 +12,11 @@ const switchLang = document.getElementById("js-switchLang");
 const exerciseDropdown = document.getElementById("js-selectedExercise");
 const restart = document.getElementById("js-restartButton");
 const selectedLanguage = document.getElementById("js-selectedLanguage");
+const spaceFiller = document.getElementById("js-spaceFiller");
 
 // only works for one language - look into ways of supporting more than one language (store languages in object or array)
 let changeLanguage = true;
+console.log(changeLanguage);
 let phrasesAlreadyCalled = [];
 
 const getSelectedExercise = () => {
@@ -22,7 +24,6 @@ const getSelectedExercise = () => {
 };
 
 const getSelectedLanguage = () => {
-  console.log(selectedLanguage.value);
   return selectedLanguage.value;
 };
 
@@ -54,16 +55,27 @@ const getExerciseText = alreadyCalledPhrases => {
 
 const showNextPhrase = () => {
   const selectLang = getSelectedLanguage();
-  utils.switchClass(phrase2, "text-hide", "text-show");
+  utils.switchClass(phrase2, "not-active", "active");
+  utils.switchClass(restart, "active", "not-active");
+  utils.switchClass(hideShowOppLang, "active", "not-active");
+  utils.switchClass(switchLang, "active", "not-active");
+  utils.switchClass(spaceFiller, "phrases-active", "phrases-not-active");
+
   hideShowOppLang.innerHTML = "show";
   let strings = getExerciseText(phrasesAlreadyCalled);
   // think about phrasesPushArr needs to be a global variable
   // change below so that you can have for more than just spanish
   if (strings.en && strings.es) {
     if (changeLanguage) {
-      utils.changeHtmlText([phrase1, strings.en], [phrase2, strings[selectLang]]);
+      utils.changeHtmlText(
+        [phrase1, strings.en],
+        [phrase2, strings[selectLang]]
+      );
     } else {
-      utils.changeHtmlText([phrase2, strings.en], [phrase1, strings[selectLang]]);
+      utils.changeHtmlText(
+        [phrase2, strings.en],
+        [phrase1, strings[selectLang]]
+      );
     }
   } else {
     finsihed.innerHTML = strings;
@@ -72,6 +84,11 @@ const showNextPhrase = () => {
 };
 
 const restartExercise = () => {
+  utils.switchClass(phrase2, "not-active", "active");
+  utils.switchClass(restart, "not-active", "active");
+  utils.switchClass(hideShowOppLang, "not-active", "active");
+  utils.switchClass(switchLang, "not-active", "active");
+  utils.switchClass(spaceFiller, "phrases-not-active", "phrases-active");
   phrasesAlreadyCalled = [];
   utils.changeHtmlText(
     [phrase1, ""],
@@ -81,10 +98,21 @@ const restartExercise = () => {
   );
 };
 
+const toggleLanguageFirstBtnText = () => {
+  changeLanguage = true;
+  return utils.changeHtmlText([
+    switchLang,
+    `${languages[getSelectedLanguage()]} First`
+  ]);
+};
+
 const oppLanguageFirst = () => {
   changeLanguage = !changeLanguage;
   if (changeLanguage) {
-    utils.changeHtmlText([switchLang, "Spanish First"]);
+    utils.changeHtmlText([
+      switchLang,
+      `${languages[getSelectedLanguage()]} First`
+    ]);
   } else {
     utils.changeHtmlText([switchLang, "English First"]);
   }
@@ -92,13 +120,16 @@ const oppLanguageFirst = () => {
 };
 
 const hideShowOppLangFunc = () => {
-  if (phrase2.className === "text-hide") {
-    utils.switchClass(phrase2, "text-show", "text-hide");
+  if (phrase2.className.includes("not-active")) {
+    utils.changeHtmlText([hideShowOppLang, "hide"]);
+    utils.switchClass(phrase2, "active", "not-active");
   } else {
-    utils.switchClass(phrase2, "text-hide", "text-show");
+    utils.changeHtmlText([hideShowOppLang, "show"]);
+    utils.switchClass(phrase2, "not-active", "active");
   }
 };
 
+selectedLanguage.addEventListener("change", toggleLanguageFirstBtnText);
 phraseBtn.addEventListener("click", showNextPhrase);
 restart.addEventListener("click", restartExercise);
 switchLang.addEventListener("click", oppLanguageFirst);
