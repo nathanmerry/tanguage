@@ -11,6 +11,7 @@ const hideShowOppLang = document.getElementById("js-showOpposite");
 const switchLang = document.getElementById("js-switchLang");
 const exerciseDropdown = document.getElementById("js-selectedExercise");
 const restart = document.getElementById("js-restartButton");
+const selectedLanguage = document.getElementById("js-selectedLanguage");
 
 // only works for one language - look into ways of supporting more than one language (store languages in object or array)
 let changeLanguage = true;
@@ -20,15 +21,21 @@ const getSelectedExercise = () => {
   return exerciseDropdown.value;
 };
 
-const phraseBtnText = () => {
-  phraseBtn.innerHTML = "Next Phrase";
+const getSelectedLanguage = () => {
+  console.log(selectedLanguage.value);
+  return selectedLanguage.value;
 };
 
-const randomiseExerciseText = exerciseArr =>
-  exerciseArr[utils.randomNumber(exerciseArr.length)];
+const changePhraseBtnText = () => {
+  return utils.changeHtmlText([phraseBtn, "Next Phrase"]);
+};
+
+const randomiseExerciseText = exerciseArr => {
+  return exerciseArr[utils.randomNumber(exerciseArr.length)];
+};
 
 const getExerciseText = alreadyCalledPhrases => {
-  phraseBtnText();
+  changePhraseBtnText();
   let selectedExercise = curriculum[getSelectedExercise()];
   const phrase = randomiseExerciseText(utils.convertObjToArr(selectedExercise));
   if (
@@ -46,6 +53,7 @@ const getExerciseText = alreadyCalledPhrases => {
 };
 
 const showNextPhrase = () => {
+  const selectLang = getSelectedLanguage();
   utils.switchClass(phrase2, "text-hide", "text-show");
   hideShowOppLang.innerHTML = "show";
   let strings = getExerciseText(phrasesAlreadyCalled);
@@ -53,9 +61,9 @@ const showNextPhrase = () => {
   // change below so that you can have for more than just spanish
   if (strings.en && strings.es) {
     if (changeLanguage) {
-      utils.changeHtmlText([phrase1, strings.en], [phrase2, strings.es]);
+      utils.changeHtmlText([phrase1, strings.en], [phrase2, strings[selectLang]]);
     } else {
-      utils.changeHtmlText([phrase2, strings.en], [phrase1, strings.es]);
+      utils.changeHtmlText([phrase2, strings.en], [phrase1, strings[selectLang]]);
     }
   } else {
     finsihed.innerHTML = strings;
