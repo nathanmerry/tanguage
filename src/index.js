@@ -1,6 +1,6 @@
 import "./styles/main.scss";
 ////////////////////////////
-import { utils } from "./utils";
+import { utils, utils2 } from "./utils";
 import { curriculum, languages } from "./data";
 
 const phrase1 = document.getElementById("js-phrase1");
@@ -16,7 +16,6 @@ const spaceFiller = document.getElementById("js-spaceFiller");
 
 // only works for one language - look into ways of supporting more than one language (store languages in object or array)
 let changeLanguage = true;
-console.log(changeLanguage);
 let phrasesAlreadyCalled = [];
 
 const getSelectedExercise = () => {
@@ -136,3 +135,10 @@ switchLang.addEventListener("click", oppLanguageFirst);
 hideShowOppLang.addEventListener("click", hideShowOppLangFunc);
 
 // write some unit tests for util functions
+
+utils2.toggleActiveClass(
+  ["not-active", "active"],
+  [header, restart, hideShowOppLang]
+);
+
+
